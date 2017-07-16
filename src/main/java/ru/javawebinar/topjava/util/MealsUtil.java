@@ -56,4 +56,17 @@ public class MealsUtil {
     public static MealWithExceed createWithExceed(Meal meal, boolean exceeded) {
         return new MealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(), exceeded);
     }
+
+    public static List<MealWithExceed> getFilteredWithExceededNotTime(List<Meal> meals, int caloriesPerDay) {
+        final Map<LocalDate, Integer> caloriesSumByDate = new HashMap<>();
+        meals.forEach(meal -> caloriesSumByDate.merge(meal.getDate(), meal.getCalories(), Integer::sum));
+
+        final List<MealWithExceed> mealsWithExceeded = new ArrayList<>();
+        meals.forEach(meal -> {
+
+            mealsWithExceeded.add(createWithExceed(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay));
+
+        });
+        return mealsWithExceeded;
+    }
 }
