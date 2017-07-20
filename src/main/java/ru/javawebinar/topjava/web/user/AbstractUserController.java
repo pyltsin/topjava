@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.List;
 
@@ -24,7 +25,12 @@ public abstract class AbstractUserController {
 
     public User get(int id) {
         log.info("get {}", id);
-        return service.get(id);
+        try {
+            return service.get(id);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public User create(User user) {
@@ -35,7 +41,11 @@ public abstract class AbstractUserController {
 
     public void delete(int id) {
         log.info("delete {}", id);
-        service.delete(id);
+        try {
+            service.delete(id);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void update(User user, int id) {
@@ -46,6 +56,11 @@ public abstract class AbstractUserController {
 
     public User getByMail(String email) {
         log.info("getByEmail {}", email);
-        return service.getByEmail(email);
+        try {
+            return service.getByEmail(email);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
