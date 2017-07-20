@@ -38,11 +38,11 @@
                 <input type="hidden" name="action" value="filterDate">
                 <p>
                     Date Start :
-                    <input type="date" name="dateStart">
+                    <input type="date" name="startDate">
                 </p>
                 <p>
                     Date End :
-                    <input type="date" name="dateEnd">
+                    <input type="date" name="endDate">
                 </p>
 
                 <input type="submit">
@@ -51,21 +51,24 @@
 
         <div class="filter">
             Фильтрация по времени
-            <form action="meals?action=filterTime" method="get">
+            <form action="meals" method="get">
                 <input type="hidden" name="action" value="filterTime">
                 <p>
                     Time Start :
-                    <input type="time" name="timeStart">
+                    <input type="time" name="startTime">
                 </p>
                 <p>
                     Time End :
-                    <input type="time" name="timeEnd">
+                    <input type="time" name="endTime">
                 </p>
 
                 <input type="submit">
             </form>
         </div>
 
+        <div>
+            <a href="meals">Сброс</a>
+        </div>
         <table border="1" cellpadding="8" cellspacing="0">
             <thead>
             <tr>
