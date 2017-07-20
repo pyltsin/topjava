@@ -20,6 +20,7 @@
             <td>${meal.description}</td>
             <td>${f:formatToTable(meal.dateTime)}</td>
             <td>${meal.calories}</td>
+            <td></td>
         </tr>
     </c:forEach>
 
