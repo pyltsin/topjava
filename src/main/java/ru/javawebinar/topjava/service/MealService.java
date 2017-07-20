@@ -6,6 +6,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 public interface MealService {
@@ -22,4 +23,6 @@ public interface MealService {
     List<MealWithExceed> getAllBetweenDate(int userId, int calories, LocalDate startDate, LocalDate endDate);
 
     List<MealWithExceed> getAllBetweenDateTime(int userId, int calories, LocalDateTime startDateTime, LocalDateTime endDateTime);
+
+    List<MealWithExceed> getAllBetweenTime(int userId, int calories, LocalTime startTime, LocalTime endTime);
 }

@@ -12,6 +12,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.checkIdConsistent;
@@ -71,7 +72,13 @@ public class MealRestController {
 
     public List<MealWithExceed> getAllBetweenDateTime(int calories, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         int userId = AuthorizedUser.id();
-        log.info("getAll userid {}, calories {} date ", userId, calories, startDateTime, endDateTime);
+        log.info("getAll userid {}, calories {} date {} - {} ", userId, calories, startDateTime, endDateTime);
         return service.getAllBetweenDateTime(userId, calories, startDateTime, endDateTime);
+    }
+
+    public List<MealWithExceed> getAllBetweenTime(int calories, LocalTime startTime, LocalTime endTime) {
+        int userId = AuthorizedUser.id();
+        log.info("getAll userid {}, calories {} time {} - {} ", userId, calories, startTime, endTime);
+        return service.getAllBetweenTime(userId, calories, startTime, endTime);
     }
 }

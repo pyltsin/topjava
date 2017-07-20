@@ -10,6 +10,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
@@ -59,4 +60,11 @@ public class MealServiceImpl implements MealService {
         return MealsUtil.getFilteredWithExceeded(repository.getBetweenDate(userId, startDateTime.toLocalDate(), endDateTime.toLocalDate()),
                 startDateTime.toLocalTime(), endDateTime.toLocalTime(), calories);
     }
+
+    @Override
+    public List<MealWithExceed> getAllBetweenTime(int userId, int calories, LocalTime starTime, LocalTime endTime) {
+        return MealsUtil.getFilteredWithExceeded(repository.getAll(userId),
+                starTime, endTime, calories);
+    }
+
 }
