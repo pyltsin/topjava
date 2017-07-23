@@ -48,11 +48,6 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getParameter("idUser") != null) {
-            AuthorizedUser.setId(Integer.valueOf(request.getParameter("idUser")));
-            response.sendRedirect("meals");
-            return;
-        }
 
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
