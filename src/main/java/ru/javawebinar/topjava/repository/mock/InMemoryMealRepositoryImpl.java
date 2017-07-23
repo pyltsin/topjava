@@ -9,6 +9,7 @@ import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -65,7 +66,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         log.info("getAll user{}", userId);
         return repository.values().stream().
                 filter(meal -> meal.getUserId() == userId).
-                sorted((o1, o2) -> o2.getDateTime().compareTo(o1.getDateTime())).
+                sorted(Comparator.comparing(Meal::getDateTime)).
                 collect(Collectors.toList());
     }
 
