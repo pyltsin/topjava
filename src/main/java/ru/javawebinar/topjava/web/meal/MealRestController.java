@@ -10,8 +10,8 @@ import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -64,21 +64,21 @@ public class MealRestController {
         return service.getAll(userId, calories);
     }
 
-    public List<MealWithExceed> getAllBetweenDate(int calories, LocalDate startDate, LocalDate endDate) {
+    public List<MealWithExceed> getAllBetweenDateTime(int calories, LocalDate startDate, LocalDate endDate,
+                                                      LocalTime startTime, LocalTime endTime) {
         int userId = AuthorizedUser.id();
-        log.info("getAll userid {}, calories {} date ", userId, calories, startDate, endDate);
-        return service.getAllBetweenDate(userId, calories, startDate, endDate);
+        log.info("getAll userid {}, calories {} date {} - {}  time {} - {}", userId, calories, startDate, endDate,
+                startTime, endTime);
+        return service.getAllBetweenDateTime(userId, calories, startDate, endDate,
+                startTime, endTime);
     }
 
-    public List<MealWithExceed> getAllBetweenDateTime(int calories, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public List<MealWithExceed> getAllBetweenDateTime(int calories, String startDate, String endDate,
+                                                      String startTime, String endTime) throws ParseException {
         int userId = AuthorizedUser.id();
-        log.info("getAll userid {}, calories {} date {} - {} ", userId, calories, startDateTime, endDateTime);
-        return service.getAllBetweenDateTime(userId, calories, startDateTime, endDateTime);
-    }
-
-    public List<MealWithExceed> getAllBetweenTime(int calories, LocalTime startTime, LocalTime endTime) {
-        int userId = AuthorizedUser.id();
-        log.info("getAll userid {}, calories {} time {} - {} ", userId, calories, startTime, endTime);
-        return service.getAllBetweenTime(userId, calories, startTime, endTime);
+        log.info("getAll userid {}, calories {} date {} - {}  time {} - {}", userId, calories, startDate, endDate,
+                startTime, endTime);
+        return service.getAllBetweenDateTime(userId, calories, startDate, endDate,
+                startTime, endTime);
     }
 }

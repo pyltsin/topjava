@@ -5,8 +5,8 @@ import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 public interface MealService {
@@ -20,9 +20,9 @@ public interface MealService {
 
     List<MealWithExceed> getAll(int userId, int calories);
 
-    List<MealWithExceed> getAllBetweenDate(int userId, int calories, LocalDate startDate, LocalDate endDate);
+    List<MealWithExceed> getAllBetweenDateTime(int userId, int calories, LocalDate startDate, LocalDate endDate,
+                                               LocalTime startTime, LocalTime endTime);
 
-    List<MealWithExceed> getAllBetweenDateTime(int userId, int calories, LocalDateTime startDateTime, LocalDateTime endDateTime);
-
-    List<MealWithExceed> getAllBetweenTime(int userId, int calories, LocalTime startTime, LocalTime endTime);
+    List<MealWithExceed> getAllBetweenDateTime(int userId, int calories, String startDate, String endDate,
+                                               String startTime, String endTime) throws DateTimeParseException;
 }

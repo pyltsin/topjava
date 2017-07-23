@@ -19,10 +19,7 @@
             width: 800px;
         }
 
-        .filter {
-            float: left;
-            width: 50%;
-        }
+
     </style>
 </head>
 <body>
@@ -35,7 +32,7 @@
         <div class="filter">
             Фильтрация по датам
             <form action="meals" method="get">
-                <input type="hidden" name="action" value="filterDate">
+                <input type="hidden" name="action" value="filter">
                 <p>
                     Date Start :
                     <input type="date" name="startDate">
@@ -44,15 +41,6 @@
                     Date End :
                     <input type="date" name="endDate">
                 </p>
-
-                <input type="submit">
-            </form>
-        </div>
-
-        <div class="filter">
-            Фильтрация по времени
-            <form action="meals" method="get">
-                <input type="hidden" name="action" value="filterTime">
                 <p>
                     Time Start :
                     <input type="time" name="startTime">

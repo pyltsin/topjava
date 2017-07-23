@@ -9,8 +9,8 @@ import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
@@ -51,20 +51,23 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public List<MealWithExceed> getAllBetweenDate(int userId, int calories, LocalDate startDate, LocalDate endDate) {
-        return MealsUtil.getWithExceeded(repository.getBetweenDate(userId, startDate, endDate), calories);
+    public List<MealWithExceed> getAllBetweenDateTime(int userId, int calories, LocalDate startDate, LocalDate endDate,
+                                                      LocalTime startTime, LocalTime endTime) {
+        return MealsUtil.getFilteredWithExceeded(repository.getBetweenDate(userId, startDate, endDate),
+                startTime, endTime, calories);
     }
 
     @Override
-    public List<MealWithExceed> getAllBetweenDateTime(int userId, int calories, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        return MealsUtil.getFilteredWithExceeded(repository.getBetweenDate(userId, startDateTime.toLocalDate(), endDateTime.toLocalDate()),
-                startDateTime.toLocalTime(), endDateTime.toLocalTime(), calories);
-    }
+    public List<MealWithExceed> getAllBetweenDateTime(int userId, int calories, String startDateStr, String endDateStr,
+                                                      String startTimeStr, String endTimeStr) throws DateTimeParseException {
 
-    @Override
-    public List<MealWithExceed> getAllBetweenTime(int userId, int calories, LocalTime starTime, LocalTime endTime) {
-        return MealsUtil.getFilteredWithExceeded(repository.getAll(userId),
-                starTime, endTime, calories);
+        LocalDate startDate = startDateStr != null && !startDateStr.equals("") ? LocalDate.parse(startDateStr) : LocalDate.MIN;
+        LocalDate endDate = endDateStr != null && !endDateStr.equals("") ? LocalDate.parse(endDateStr) : LocalDate.MAX;
+
+        LocalTime startTime = startTimeStr != null && !startTimeStr.equals("") ? LocalTime.parse(startTimeStr) : LocalTime.MIN;
+        LocalTime endTime = endTimeStr != null && !endTimeStr.equals("") ? LocalTime.parse(endTimeStr) : LocalTime.MAX;
+
+        return getAllBetweenDateTime(userId, calories, startDate, endDate, startTime, endTime);
     }
 
 }
