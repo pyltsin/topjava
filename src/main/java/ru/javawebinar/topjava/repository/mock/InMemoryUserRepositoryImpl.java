@@ -35,6 +35,14 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
         System.out.println(rep.getByEmail("a@a"));
     }
 
+    private static int compare(User o1, User o2) {
+        if (!o1.getName().equals(o2.getName())) {
+            return o1.getName().compareTo(o2.getName());
+        } else {
+            return o1.getId().compareTo(o2.getId());
+        }
+    }
+
     @Override
     public boolean delete(int id) {
         log.info("delete {}", id);
@@ -60,10 +68,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAll() {
         log.info("getAll");
-        return repository.values().stream().sorted((o1, o2) ->
-                (!o1.getName().equals(o2.getName())) ?
-                        o1.getName().compareTo(o2.getName()) :
-                        o1.getId().compareTo(o2.getId()))
+        return repository.values().stream().sorted(InMemoryUserRepositoryImpl::compare)
                 .collect(Collectors.toList());
     }
 
