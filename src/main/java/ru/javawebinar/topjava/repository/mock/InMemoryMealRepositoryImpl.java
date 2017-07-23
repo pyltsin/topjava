@@ -72,7 +72,6 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     @Override
     public List<Meal> getAll(int userId) {
         log.info("getAll user{}", userId);
-
         return repository.values().stream().
                 filter(meal -> meal.getUserId() == userId).
                 sorted((o1, o2) -> o2.getDateTime().compareTo(o1.getDateTime())).
@@ -92,8 +91,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
             if (get(meal.getId(), userId) == null) {
                 return null;
             }
-            delete(meal.getId(), userId);
-            return save(meal);
+            return repository.put(meal.getId(), meal);
         }
     }
 }
