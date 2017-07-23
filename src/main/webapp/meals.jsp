@@ -26,7 +26,7 @@
 <section>
     <h3><a href="index.html">Home</a></h3>
     <h2>Meal list</h2>
-    <a href="meals?action=filterDate">Add Meal</a>
+    <a href="meals?action=create">Add Meal</a>
     <hr/>
     <div class="filter-container">
         <div class="filter">
