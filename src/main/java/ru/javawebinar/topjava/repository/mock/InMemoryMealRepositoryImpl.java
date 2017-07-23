@@ -25,16 +25,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         MealsUtil.MEALS.forEach(this::save);
     }
 
-    public static void main(String[] args) {
-        //test get
-        InMemoryMealRepositoryImpl repository = new InMemoryMealRepositoryImpl();
-        System.out.println(repository.get(1, 1));
 
-        //test getAll
-        for (Meal meal : repository.getAll(1)) {
-            System.out.println(meal);
-        }
-    }
 
     @Override
     public Meal save(Meal meal) {

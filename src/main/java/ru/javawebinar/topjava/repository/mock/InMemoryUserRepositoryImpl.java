@@ -23,17 +23,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
         UsersUtil.USERS.forEach(this::save);
     }
 
-    public static void main(String[] args) {
-//        test getAll
-        InMemoryUserRepositoryImpl rep = new InMemoryUserRepositoryImpl();
-        for (User user : rep.getAll()) {
-            System.out.println(user);
-        }
 
-        //test find email
-
-        System.out.println(rep.getByEmail("a@a"));
-    }
 
     private static int compare(User o1, User o2) {
         if (!o1.getName().equals(o2.getName())) {
