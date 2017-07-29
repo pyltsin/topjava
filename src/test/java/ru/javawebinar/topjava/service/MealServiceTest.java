@@ -10,20 +10,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.MealTestData;
 import ru.javawebinar.topjava.UserTestData;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.util.DbPopulator;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import static org.testng.Assert.*;
-import static ru.javawebinar.topjava.MealTestData.MATCHER;
-import static ru.javawebinar.topjava.MealTestData.MEAL_USER;
-import static ru.javawebinar.topjava.MealTestData.MEAL_USER2;
-import static ru.javawebinar.topjava.UserTestData.ADMIN;
-import static ru.javawebinar.topjava.UserTestData.USER;
+import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
 @RunWith(SpringRunner.class)
@@ -66,7 +61,7 @@ public class MealServiceTest {
 
     @Test(expected = NotFoundException.class)
     public void testDeleteNotFound() throws Exception {
-        service.delete(1,1);
+        service.delete(1, 1);
     }
 
     @Test
@@ -78,28 +73,41 @@ public class MealServiceTest {
 
     @Test
     public void testGetBetweenDateTimes() throws Exception {
+        Collection<Meal> all = service.getBetweenDateTimes(LocalDateTime.parse("2017-07-29T07:34:19"), LocalDateTime.parse("2017-07-29T07:34:21"), USER_ID);
+        MealTestData.MATCHER.assertCollectionEquals(Arrays.asList(MEAL_USER2), all);
+
     }
 
 
     @Test
     public void testUpdate() throws Exception {
+        Meal fromDB = service.get(MEAL_USER.getId(), USER_ID);
+        fromDB.setCalories(9);
+        service.update(fromDB, USER_ID);
+        MATCHER.assertEquals(service.get(MEAL_USER.getId(), USER_ID), fromDB);
     }
 
     @Test
     public void testSave() throws Exception {
+        Meal mealNew = new Meal(LocalDateTime.now(), "test", 1000);
+        Meal mealFromDB = service.save(mealNew, USER_ID);
+        MATCHER.assertEquals(service.get(mealFromDB.getId(), USER_ID), mealNew);
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testFailedUpdate() throws Exception {
+        Meal fromDB = service.get(MEAL_USER.getId(), USER_ID);
+        service.update(fromDB, USER_ID + 1);
     }
 
-
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testFailedGet() throws Exception {
+        Meal meal = service.get(MealTestData.MEAL_ID_START, UserTestData.USER_ID + 1);
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void testFailedDelete() throws Exception {
+        service.delete(MealTestData.MEAL_ID_START, UserTestData.USER_ID + 1);
     }
 
 }
