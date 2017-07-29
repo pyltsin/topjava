@@ -14,10 +14,6 @@ INSERT INTO user_roles (role, user_id) VALUES
 
 
 INSERT INTO meals (description, calories,
-                   date_time) VALUES
-  ('ужин', 1000, NOW()),
-  ('завтрак', 1020, NOW());
-
-INSERT INTO user_meals (user_id, meal_id) VALUES
-  (100000, 100002),
-  (100001, 100003);
+                   date_time, user_id) VALUES
+  ('ужин', 1000, NOW(), 100000),
+  ('завтрак', 1020, NOW(), 100001);
