@@ -1,15 +1,20 @@
 package ru.javawebinar.topjava.service;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.testng.annotations.Test;
+import ru.javawebinar.topjava.MealTestData;
+import ru.javawebinar.topjava.UserTestData;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.DbPopulator;
 
 import static org.testng.Assert.*;
+import static ru.javawebinar.topjava.MealTestData.MATCHER;
+import static ru.javawebinar.topjava.MealTestData.MEAL_USER;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration({"classpath:spring/spring-app.xml",
@@ -33,10 +38,13 @@ public class MealServiceTest {
 
     @Test
     public void testGet() throws Exception {
+        Meal meal = service.get(MealTestData.MEAL_ID_START, UserTestData.USER_ID);
+        MATCHER.assertEquals(MEAL_USER, meal);
     }
 
     @Test
     public void testDelete() throws Exception {
+        
     }
 
     @Test
