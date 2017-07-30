@@ -1,2 +1,2 @@
-CREATE INDEX idx_meal
-  ON MEALS (id, user_id);
+CREATE INDEX idx_user_meal
+  ON MEALS (user_id);

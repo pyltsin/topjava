@@ -4,11 +4,11 @@ import ru.javawebinar.topjava.matcher.BeanMatcher;
 import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 public class MealTestData {
 
     public static final int MEAL_ID_START = 100002;
+
     public static final Meal MEAL_USER = new Meal(MEAL_ID_START, LocalDateTime.parse("2017-07-29T06:34:20"),
             "ужин", 1000);
 
@@ -18,13 +18,6 @@ public class MealTestData {
     public static final Meal MEAL_ADMIN = new Meal(MEAL_ID_START + 2, LocalDateTime.parse("2017-07-29T06:34:25"),
             "завтрак", 1020);
 
-    public static final BeanMatcher<Meal> MATCHER = new BeanMatcher<>(
-            (expected, actual) -> expected == actual ||
-                    (Objects.equals(expected.getCalories(), actual.getCalories())
-                            && Objects.equals(expected.getId(), actual.getId())
-                            && Objects.equals(expected.getDateTime(), actual.getDateTime())
-                            && Objects.equals(expected.getDescription(), actual.getDescription())
-                    )
-    );
+    public static final BeanMatcher<Meal> MATCHER = new BeanMatcher<>();
 }
 

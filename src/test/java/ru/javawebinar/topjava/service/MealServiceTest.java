@@ -47,22 +47,12 @@ public class MealServiceTest {
         MATCHER.assertEquals(MEAL_USER, meal);
     }
 
-    @Test(expected = NotFoundException.class)
-    public void testGetNotFound() throws Exception {
-        service.get(1, 1);
-    }
-
-
     @Test
     public void testDelete() throws Exception {
         service.delete(MealTestData.MEAL_ID_START, UserTestData.USER_ID);
         MealTestData.MATCHER.assertCollectionEquals(Collections.singletonList(MEAL_USER2), service.getAll(UserTestData.USER_ID));
     }
 
-    @Test(expected = NotFoundException.class)
-    public void testDeleteNotFound() throws Exception {
-        service.delete(1, 1);
-    }
 
     @Test
     public void testGetAll() throws Exception {
