@@ -13,18 +13,18 @@ import java.time.LocalTime;
 @Table(name = "meals")
 @NamedQueries({
         @NamedQuery(name = Meal.UPDATE, query = "" +
-                "update Meal m set m.calories=:calories," +
+                "UPDATE Meal m SET m.calories=:calories," +
                 "m.dateTime=:dateTime," +
-                "m.description=:description where m.id=:id " +
-                "and m.user.id=:userId"),
+                "m.description=:description WHERE m.id=:id " +
+                "AND m.user.id=:userId"),
         @NamedQuery(name = Meal.DELETE, query = "" +
-                "delete from Meal m  where m.id=:id and " +
+                "DELETE FROM Meal m  WHERE m.id=:id AND " +
                 "m.user.id=:userId"),
         @NamedQuery(name = Meal.ALL_SORTED, query = "" +
-                "select m from Meal m where m.user.id=:userId order by m.dateTime desc "),
+                "SELECT m FROM Meal m WHERE m.user.id=:userId ORDER BY m.dateTime DESC "),
         @NamedQuery(name = Meal.BETWEEN, query = "" +
-                "select m from Meal m where m.user.id=:userId and  m.dateTime between " +
-                ":startDate and :endDate order by m.dateTime desc"),
+                "SELECT m FROM Meal m WHERE m.user.id=:userId AND  m.dateTime BETWEEN " +
+                ":startDate AND :endDate ORDER BY m.dateTime DESC"),
 })
 public class Meal extends BaseEntity {
 
@@ -46,7 +46,8 @@ public class Meal extends BaseEntity {
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
+    @NotNull
     private User user;
 
     public Meal() {

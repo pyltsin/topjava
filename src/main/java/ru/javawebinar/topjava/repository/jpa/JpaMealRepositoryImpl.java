@@ -22,26 +22,48 @@ public class JpaMealRepositoryImpl implements MealRepository {
     @Override
     @Transactional
     public Meal save(Meal meal, int userId) {
+
+        if (meal == null) {
+            return null;
+        }
+
         if (meal.isNew()) {
             User user = em.getReference(User.class, userId);
             meal.setUser(user);
             em.persist(meal);
             return meal;
         } else {
+            if (checkUserMeal(meal, userId)) {
+                return em.merge(meal);
+            } else if (meal.getUser() != null && meal.getUser().getId() != userId) {
+                return null;
+            } else {
+                Meal oldMeal = em.find(Meal.class, meal.getId());
+                if (checkUserMeal(oldMeal, userId)) {
+                    User user = em.getReference(User.class, userId);
+                    meal.setUser(user);
+                    return em.merge(meal);
+                } else {
+                    return null;
+                }
+            }
 
-            int n = em.createNamedQuery(Meal.UPDATE)
-                    .setParameter("id", meal.getId())
-                    .setParameter("userId", userId)
-                    .setParameter("calories", meal.getCalories())
-                    .setParameter("dateTime", meal.getDateTime())
-                    .setParameter("description", meal.getDescription())
-                    .executeUpdate();
-            return n != 0 ? meal : null;
+
+// //       solution with NamedQuery
+//            int n = em.createNamedQuery(Meal.UPDATE)
+//                    .setParameter("id", meal.getId())
+//                    .setParameter("userId", userId)
+//                    .setParameter("calories", meal.getCalories())
+//                    .setParameter("dateTime", meal.getDateTime())
+//                    .setParameter("description", meal.getDescription())
+//                    .executeUpdate();
+//            return n != 0 ? meal : null;
         }
     }
 
     private boolean checkUserMeal(Meal meal, int userId) {
-        return meal.getUser().getId() == userId;
+        return meal != null && meal.getUser() != null &&
+                meal.getUser().getId() != null && meal.getUser().getId() == userId;
     }
 
     @Override

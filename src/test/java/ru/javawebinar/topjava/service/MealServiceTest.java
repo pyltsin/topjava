@@ -1,6 +1,8 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.slf4j.bridge.SLF4JBridgeHandler;
@@ -10,7 +12,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.rules.TestWatcherImpl;
+import ru.javawebinar.topjava.rules.StopWatcherImpl;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -47,7 +49,9 @@ public class MealServiceTest {
     public final ExpectedException thrown = ExpectedException.none();
 
     @Rule
-    public final TestWatcherImpl testWatcher = new TestWatcherImpl(timeTest);
+    public final StopWatcherImpl testWatcher = new StopWatcherImpl(timeTest);
+//    @Rule
+//    public final TestWatcherImpl testWatcher = new TestWatcherImpl(timeTest);
 
     @Autowired
     private MealService service;
