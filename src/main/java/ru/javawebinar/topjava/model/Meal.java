@@ -33,15 +33,15 @@ public class Meal extends BaseEntity {
     public static final String ALL_SORTED = "Meal.allSorted";
     public static final String BETWEEN = "Meal.between";
 
-    @Column(name = "date_time")
+    @Column(name = "date_time", nullable = false)
     @NotNull
     private LocalDateTime dateTime;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     @NotBlank
     private String description;
 
-    @Column(name = "calories")
+    @Column(name = "calories", nullable = false)
     @Range(min = 0, max = 10000)
     private int calories;
 
