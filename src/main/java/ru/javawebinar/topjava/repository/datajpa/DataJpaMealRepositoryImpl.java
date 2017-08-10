@@ -34,7 +34,8 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public boolean delete(int id, int userId) {
-        long number = crudRepository.delete(id, userId);
+//        long number = crudRepository.delete(id, userId);
+        long number = crudRepository.deleteByIdAndUserId(id, userId);
         if (number > 1) {
             log.error("delete > 1 for meal");
         }
@@ -52,11 +53,13 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        return crudRepository.findAll(userId);
+        return crudRepository.findAllByUserIdOrderByDateTimeDesc(userId);
+//        return crudRepository.findAll(userId);
     }
 
     @Override
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-        return crudRepository.findAllDateTime(userId, startDate, endDate);
+//        return crudRepository.findAllDateTime(userId, startDate, endDate);
+        return crudRepository.findAllByUserIdAndDateTimeBetweenOrderByDateTimeDesc(userId, startDate, endDate);
     }
 }
