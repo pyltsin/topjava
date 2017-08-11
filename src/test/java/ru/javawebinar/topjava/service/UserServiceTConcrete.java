@@ -24,7 +24,7 @@ abstract public class UserServiceTConcrete extends ServiceTest {
     }
 
     @Autowired
-    private UserService service;
+    UserService service;
 
     @Before
     public void setUp() throws Exception {

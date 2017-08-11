@@ -3,11 +3,14 @@ package ru.javawebinar.topjava.repository.datajpa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +24,15 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
 
     @Autowired
     private CrudUserRepository crudUserRepository;
+
+    @Transactional
+    @Lazy(value = false)
+    public Meal getWithUser(int id, int userId) throws NotFoundException {
+        Meal meal = get(id, userId);
+        User user = crudUserRepository.findOne(userId);
+        meal.setUser(user);
+        return meal;
+    }
 
     @Override
     @Transactional

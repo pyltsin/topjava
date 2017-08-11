@@ -9,6 +9,9 @@ import java.time.LocalTime;
 import java.util.List;
 
 public interface MealService {
+
+    Meal getWithUser(int id, int userId)throws NotFoundException;
+
     Meal get(int id, int userId) throws NotFoundException;
 
     void delete(int id, int userId) throws NotFoundException;

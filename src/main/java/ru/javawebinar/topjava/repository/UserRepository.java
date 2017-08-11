@@ -5,6 +5,11 @@ import ru.javawebinar.topjava.model.User;
 import java.util.List;
 
 public interface UserRepository {
+
+    default User getWithMeal(int id) {
+        return get(id);
+    }
+
     User save(User user);
 
     // false if not found

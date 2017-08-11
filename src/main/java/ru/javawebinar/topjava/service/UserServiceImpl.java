@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService {
     private UserRepository repository;
 
     @Override
+    public User getWithMeal(int id) {
+        return checkNotFoundWithId(repository.getWithMeal(id), id);
+    }
+
+    @Override
     public User create(User user) {
         return repository.save(user);
     }

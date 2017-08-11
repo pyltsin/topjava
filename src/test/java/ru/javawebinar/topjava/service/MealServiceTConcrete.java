@@ -29,7 +29,7 @@ abstract public class MealServiceTConcrete extends ServiceTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
     @Autowired
-    private MealService service;
+    MealService service;
 
     @Test
     public void testDelete() throws Exception {
