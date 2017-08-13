@@ -43,9 +43,6 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
     public boolean delete(int id, int userId) {
         long number = crudRepository.delete(id, userId);
 //        long number = crudRepository.deleteByIdAndUserId(id, userId);
-        if (number > 1) {
-            log.error("delete > 1 for meal");
-        }
         return number == 1;
     }
 
