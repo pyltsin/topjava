@@ -32,8 +32,7 @@ public class MealServlet extends HttpServlet {
         ctx = new GenericXmlApplicationContext();
         ConfigurableEnvironment env = ctx.getEnvironment();
         env.setActiveProfiles("jpa", "postgres");
-        ctx.load("spring/spring-app.xml", "spring/spring-db.xml",
-                "spring/spring-tools.xml");
+        ctx.load("spring/spring-app.xml", "spring/spring-db.xml");
         ctx.refresh();
 
 

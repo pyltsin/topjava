@@ -3,12 +3,10 @@ package ru.javawebinar.topjava.repository.datajpa;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
@@ -26,12 +24,9 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
     private CrudUserRepository crudUserRepository;
 
     @Transactional
-    @Lazy(value = false)
     public Meal getWithUser(int id, int userId) throws NotFoundException {
-        Meal meal = get(id, userId);
-        User user = crudUserRepository.findOne(userId);
-        meal.setUser(user);
-        return meal;
+        Meal meal = crudRepository.getWithUser(id);
+        return meal.getUser().getId() == userId ? meal : null;
     }
 
     @Override
@@ -46,8 +41,8 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public boolean delete(int id, int userId) {
-//        long number = crudRepository.delete(id, userId);
-        long number = crudRepository.deleteByIdAndUserId(id, userId);
+        long number = crudRepository.delete(id, userId);
+//        long number = crudRepository.deleteByIdAndUserId(id, userId);
         if (number > 1) {
             log.error("delete > 1 for meal");
         }

@@ -1,11 +1,9 @@
 package ru.javawebinar.topjava.repository.datajpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
@@ -24,11 +22,8 @@ public class DataJpaUserRepositoryImpl implements UserRepository {
 
 
     @Transactional
-    @Lazy(value = false)
     public User getWithMeal(int id) throws NotFoundException {
-        User user = get(id);
-        List<Meal> meals = crudMealRepository.findAllByUserIdOrderByDateTimeDesc(id);
-        user.setMeals(meals);
+        User user = crudRepository.getWithMeal(id);
         return user;
     }
 

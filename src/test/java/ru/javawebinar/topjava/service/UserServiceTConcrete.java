@@ -2,7 +2,6 @@ package ru.javawebinar.topjava.service;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import ru.javawebinar.topjava.model.Role;
@@ -17,12 +16,6 @@ import static ru.javawebinar.topjava.UserTestData.*;
 
 abstract public class UserServiceTConcrete extends ServiceTest {
 
-    static {
-        // Only for postgres driver logging
-        // It uses java.util.logging and logged via jul-to-slf4j bridge
-        SLF4JBridgeHandler.install();
-    }
-
     @Autowired
     UserService service;
 
@@ -36,7 +29,7 @@ abstract public class UserServiceTConcrete extends ServiceTest {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, Collections.singleton(Role.ROLE_USER));
         User created = service.create(newUser);
         newUser.setId(created.getId());
-        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, newUser, USER), service.getAll());
+        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, newUser, USER, USER2), service.getAll());
     }
 
     @Test(expected = DataAccessException.class)
@@ -47,7 +40,7 @@ abstract public class UserServiceTConcrete extends ServiceTest {
     @Test
     public void testDelete() throws Exception {
         service.delete(USER_ID);
-        MATCHER.assertCollectionEquals(Collections.singletonList(ADMIN), service.getAll());
+        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, USER2), service.getAll());
     }
 
     @Test(expected = NotFoundException.class)
@@ -75,7 +68,7 @@ abstract public class UserServiceTConcrete extends ServiceTest {
     @Test
     public void testGetAll() throws Exception {
         Collection<User> all = service.getAll();
-        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, USER), all);
+        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN, USER, USER2), all);
     }
 
     @Test

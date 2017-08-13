@@ -1,10 +1,6 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import org.slf4j.Logger;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
@@ -13,21 +9,12 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
 
-import static org.slf4j.LoggerFactory.getLogger;
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
 abstract public class MealServiceTConcrete extends ServiceTest {
-    private static final Logger resultLog = getLogger("result");
 
-    static {
-        // needed only for java.util.logging (postgres driver)
-        SLF4JBridgeHandler.install();
-    }
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
     @Autowired
     MealService service;
 

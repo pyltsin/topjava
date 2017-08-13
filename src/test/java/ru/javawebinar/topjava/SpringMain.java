@@ -21,8 +21,7 @@ public class SpringMain {
         try (GenericXmlApplicationContext appCtx = new GenericXmlApplicationContext()) {
             ConfigurableEnvironment env = appCtx.getEnvironment();
             env.setActiveProfiles("jdbc", "postgres");
-            appCtx.load("spring/spring-app.xml", "spring/spring-db.xml",
-                    "spring/spring-tools.xml");
+            appCtx.load("spring/spring-app.xml", "spring/spring-db.xml");
             appCtx.refresh();
 
             System.out.println("Beana definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
