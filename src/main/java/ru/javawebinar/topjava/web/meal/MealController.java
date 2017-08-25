@@ -21,19 +21,20 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
  * Created by Pyltsin on 25.08.2017.
  */
 @Controller
+@RequestMapping(value = "/meals", method = {RequestMethod.GET, RequestMethod.POST})
 public class MealController extends AbstractMealController {
 
     public MealController(MealService service) {
         super(service);
     }
 
-    @RequestMapping(value = "/meals", method = RequestMethod.GET)
+    @RequestMapping(value = {"/meals", "", "/"}, method = RequestMethod.GET)
     public String meals(Model model) {
         model.addAttribute("meals", getAll());
         return "meals";
     }
 
-    @RequestMapping(value = "/mealsFilter", method = RequestMethod.POST)
+    @RequestMapping(value = "/filter", method = RequestMethod.POST)
     public String filter(HttpServletRequest request) {
         LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
         LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
@@ -43,8 +44,8 @@ public class MealController extends AbstractMealController {
         return "meals";
     }
 
-    @RequestMapping(value = "/mealsUpdate", method = RequestMethod.POST)
-    public String update(HttpServletRequest request) {
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String save(HttpServletRequest request) {
         Meal meal = new Meal(
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
@@ -55,26 +56,26 @@ public class MealController extends AbstractMealController {
         } else {
             update(meal, getId(request));
         }
-        return "redirect:meals";
+        return "redirect: meals";
     }
 
-    @RequestMapping(value = "/mealsGetForCreate", method = RequestMethod.GET)
-    public String getForCreate(HttpServletRequest request) {
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public String create(HttpServletRequest request) {
         final Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
         request.setAttribute("meal", meal);
         request.setAttribute("param.action", "create");
         return "mealForm";
     }
 
-    @RequestMapping(value = "/mealsDelete", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String delete(HttpServletRequest request) {
         int id = getId(request);
         delete(id);
-        return "redirect:meals";
+        return "redirect: meals";
     }
 
 
-    @RequestMapping(value = "/mealsGetForUpdate", method = RequestMethod.GET)
+    @RequestMapping(value = "/update", method = RequestMethod.GET)
     public String getForUpdate(HttpServletRequest request) {
         final Meal meal = get(getId(request));
         request.setAttribute("meal", meal);
