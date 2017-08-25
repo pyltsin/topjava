@@ -1,8 +1,8 @@
 package ru.javawebinar.topjava.service;
-import javax.validation.ConstraintViolationException;
 
 import org.junit.AfterClass;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.Stopwatch;
 import org.junit.runner.Description;
@@ -16,10 +16,16 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.ActiveDbProfileResolver;
+import ru.javawebinar.topjava.model.Meal;
 
+import javax.validation.ConstraintViolationException;
+import java.time.Month;
 import java.util.concurrent.TimeUnit;
+
 import static java.time.LocalDateTime.of;
 import static org.slf4j.LoggerFactory.getLogger;
+import static ru.javawebinar.topjava.UserTestData.USER_ID;
+import static ru.javawebinar.topjava.service.AbstractServiceTest.validateRootCause;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
