@@ -9,7 +9,12 @@
 
 <section>
     <h3><a href="index.html">Home</a></h3>
-    <h2>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h2>
+    <h2><c:choose>
+        <c:when test="${param.action == 'create'}"><spring:message code="meal.create"/></c:when>
+        <c:otherwise><spring:message code="meal.edit"/></c:otherwise>
+    </c:choose>
+    </h2>
+    <%--<h2>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h2>--%>
     <hr>
     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
     <form method="post" action="${pageContext.request.contextPath}/meals/save">

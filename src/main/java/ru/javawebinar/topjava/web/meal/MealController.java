@@ -28,7 +28,7 @@ public class MealController extends AbstractMealController {
         super(service);
     }
 
-    @RequestMapping(value = {"/meals", "", "/"}, method = RequestMethod.GET)
+    @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String meals(Model model) {
         model.addAttribute("meals", getAll());
         return "meals";
@@ -56,7 +56,7 @@ public class MealController extends AbstractMealController {
         } else {
             update(meal, getId(request));
         }
-        return "redirect: meals";
+        return "redirect: ../meals/";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)

@@ -7,7 +7,7 @@ import ru.javawebinar.topjava.repository.JpaUtil;
 /**
  * Created by Pyltsin on 25.08.2017.
  */
-public class AbstractUserServiceJpaTest extends AbstractUserServiceTest {
+public abstract class AbstractUserServiceJpaTest extends AbstractUserServiceTest {
 
     @Autowired
     protected JpaUtil jpaUtil;
