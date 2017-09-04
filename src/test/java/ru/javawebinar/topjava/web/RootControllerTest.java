@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.*;
@@ -37,10 +38,9 @@ public class RootControllerTest extends AbstractControllerTest {
                 .andExpect(view().name("meals"))
                 .andExpect(forwardedUrl("/WEB-INF/jsp/meals.jsp"))
                 .andExpect(model().attribute("meals", hasSize(6)))
-                .andExpect(model().attribute("meals", hasItem(
-                        allOf(
+                .andExpect(model().attribute("meals", Matchers.hasItem(
+                        Matchers.allOf(
                                 hasProperty("id", is(MEAL1_ID)),
-                                hasProperty("calories", is(MEAL1.getCalories())),
                                 hasProperty("description", is(MEAL1.getDescription())
                                 )
                         ))));
