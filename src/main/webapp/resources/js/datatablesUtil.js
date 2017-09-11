@@ -1,6 +1,6 @@
 function makeEditable() {
     $(".delete").click(function () {
-        deleteRow($(this).attr("id"));
+        deleteRow($(this).closest("tr").attr("id"));
     });
 
     $("#detailsForm").submit(function () {
@@ -32,18 +32,26 @@ function deleteRow(id) {
     });
 }
 
+
 function updateTable() {
-    $.get(ajaxUrl, function (data) {
+    $.get(ajaxUrlUpdate(), function (data) {
         datatableApi.clear().rows.add(data).draw();
+        reDraw();
     });
 }
 
 function save() {
     var form = $("#detailsForm");
+    var paramObj ={};
+    $.each(form.serializeArray(), function(_, kv) {
+        paramObj[kv.name] = kv.value;
+    });
     $.ajax({
         type: "POST",
         url: ajaxUrl,
-        data: form.serialize(),
+        data: JSON.stringify(paramObj),
+        contentType:"application/json; charset=utf-8",
+        dataType:"json",
         success: function () {
             $("#editRow").modal("hide");
             updateTable();

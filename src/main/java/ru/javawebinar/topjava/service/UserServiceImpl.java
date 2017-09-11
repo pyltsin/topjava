@@ -1,5 +1,7 @@
 package ru.javawebinar.topjava.service;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
-    @Cacheable("users")
+//    @Cacheable("users")
     @Override
     public List<User> getAll() {
         return repository.getAll();
@@ -63,5 +65,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getWithMeals(int id) {
         return checkNotFoundWithId(repository.getWithMeals(id), id);
+    }
+
+
+    @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    @Override
+    public void enabledUpdate(int id, boolean enabled) {
+        User user = get(id);
+        user.setEnabled(enabled);
+        update(user);
     }
 }
